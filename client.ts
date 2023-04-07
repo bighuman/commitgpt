@@ -1,12 +1,12 @@
-// Adapted from: https://github.com/wong2/chat-gpt-google-extension/blob/main/background/index.mjs
-
+import * as dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
-import ExpiryMap from 'expiry-map';
 import { Configuration, OpenAIApi } from 'openai';
+dotenv.config()
 
 export const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
+
 
 export const openai = new OpenAIApi(configuration);
 
