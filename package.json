@@ -26,11 +26,14 @@
     "eventsource-parser": "^0.0.5",
     "expiry-map": "^2.0.0",
     "node-fetch": "^3.3.0",
+    "openai": "^3.2.1",
     "ora": "^6.1.2",
     "uuid": "^9.0.0",
     "yargs-parser": "^21.1.1"
   },
   "devDependencies": {
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "tsc": "^2.0.4",
+    "typescript": "^5.0.3"
   }
 }
