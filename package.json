@@ -7,7 +7,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node --esm index.ts",
+    "start": "tsc && node -r dotenv/config dist/index.js",
     "prepublishOnly": "npm run build"
   },
   "repository": {
