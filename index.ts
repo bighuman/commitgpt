@@ -6,7 +6,6 @@ import ora from 'ora';
 import parseArgs from 'yargs-parser';
 
 import { ChatGPTClient } from './client.js';
-import { ensureSessionToken } from './config.js';
 
 const CUSTOM_MESSAGE_OPTION = '[write own message]...';
 const MORE_OPTION = '[ask for more ideas]...';
@@ -42,13 +41,7 @@ run(diff)
   });
 
 async function run(diff: string) {
-  const api = new ChatGPTClient({
-    sessionToken: await ensureSessionToken(),
-  });
-
-  spinner.start('Authorizing with OpenAI...');
-  await api.ensureAuth();
-  spinner.stop();
+  const api = new ChatGPTClient();
 
   const firstRequest =
     `Suggest me a few good commit messages for my commit ${CONVENTIONAL_REQUEST}.\n` +
@@ -107,20 +100,10 @@ async function getMessages(api: ChatGPTClient, request: string) {
       .filter(line => line.match(/^(\d+\.|-|\*)\s+/))
       .map(normalizeMessage);
 
-    spinner.stop();
-
     messages.push(CUSTOM_MESSAGE_OPTION, MORE_OPTION);
     return messages;
   } catch (e) {
-    spinner.stop();
-    if (e.message === 'Unauthorized') {
-      console.log('Looks like your session token has expired');
-      await ensureSessionToken(true);
-      // retry
-      return getMessages(api, request);
-    } else {
-      throw e;
-    }
+    throw e;
   }
 }
 
